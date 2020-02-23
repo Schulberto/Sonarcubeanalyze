@@ -1,8 +1,13 @@
-stage 
-    ('Code analyze with Sonarcube')
+#!groovy
+properties([disableConcurrentBuilds()])
+pipeline {
+        agent any
+        stages {
+stage   ('Code analyze with Sonarcube')
 {
   def scannerhome = tool 'scanner';
-  withSonarQubeEnv ('SonarOUT') {
+  withSonarQubeEnv ('SonarOUT') 
+  {
     sh "${tool("scanner")}/bin/sonar-scanner"
     // some block
     }
