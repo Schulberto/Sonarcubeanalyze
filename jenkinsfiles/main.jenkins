@@ -1,0 +1,25 @@
+node 
+{
+    stage ('Checkout SCM')
+{
+    checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'ssh-git', url: 'git@github.com:Schulberto/Sonarcubeanalyze.git']]])
+}
+stage 
+    ('Code analyze with Sonarcube')
+{
+  def scannerhome = tool 'scanner';
+  withSonarQubeEnv ('SonarOUT') {
+    sh "${tool("scanner")}/bin/sonar-scanner"
+    // some block
+    }
+  }
+}
+stage ('Build')
+	{
+		script
+		{
+			echo '----BUILD----'
+			sh 'pwd'
+		}
+	}
+}
